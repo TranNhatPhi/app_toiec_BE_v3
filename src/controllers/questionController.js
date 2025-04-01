@@ -18,6 +18,15 @@ const QuestionController = {
             return serverErrorResponse(res, "Lỗi hệ thống");
         }
     },
+    async getTotalQuestionCount(req, res) {
+        try {
+            const count = await QuestionService.getAllCountQuestion();
+            return successResponse(res, "Tổng số câu hỏi", count);
+
+        } catch (error) {
+            return serverErrorResponse(res, "Lỗi khi đếm tổng số câu hỏi");
+        }
+    },
 
     // 🟢 Lấy câu hỏi theo ID
     async getQuestionById(req, res) {

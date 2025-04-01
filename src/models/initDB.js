@@ -6,6 +6,8 @@ const ExamResult = require("./examResults");
 const Question = require("./question");
 const Role = require("./role");
 const Detail = require("./detail")
+const ExamSession = require("./examSession"); // thêm vào nếu chưa
+
 
 const initDatabase = async () => {
     try {

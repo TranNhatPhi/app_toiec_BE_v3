@@ -6,6 +6,11 @@ const QuestionService = {
         return await Question.findAll();
     },
 
+
+    async getAllCountQuestion() {
+        return await Question.count();
+    },
+
     // 🟢 Lấy câu hỏi theo ID
     async getQuestionById(id) {
         return await Question.findByPk(id);

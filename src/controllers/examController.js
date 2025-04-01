@@ -32,14 +32,27 @@ const ExamController = {
     },
 
     // 🟢 Lấy danh sách câu hỏi của bài thi với phần và câu hỏi
+    // async getExamQuestions(req, res) {
+    //     try {
+    //         const { id } = req.params;
+    //         const examQuestions = await ExamService.getExamQuestionsByExamId(Number(id));
+
+    //         if (!examQuestions) {
+    //             return notFoundResponse(res, "Bài thi không tồn tại hoặc không có câu hỏi");
+    //         }
+
+    //         return successResponse(res, "Lấy danh sách câu hỏi thành công", examQuestions);
+    //     } catch (error) {
+    //         return serverErrorResponse(res, "Lỗi hệ thống", error);
+    //     }
+    // },
+
     async getExamQuestions(req, res) {
         try {
             const { id } = req.params;
-            const examQuestions = await ExamService.getExamQuestionsByExamId(Number(id));
+            const isTimeExpired = req.query.expired === "true"; // ?expired=true
 
-            if (!examQuestions) {
-                return notFoundResponse(res, "Bài thi không tồn tại hoặc không có câu hỏi");
-            }
+            const examQuestions = await ExamService.getExamQuestionsByExamId(Number(id), isTimeExpired);
 
             return successResponse(res, "Lấy danh sách câu hỏi thành công", examQuestions);
         } catch (error) {

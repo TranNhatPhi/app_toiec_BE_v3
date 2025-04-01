@@ -45,6 +45,26 @@ router.get("/", ExamController.getAllExams);
  */
 router.get("/:id", ExamController.getExamById);
 
+// /**
+//  * @swagger
+//  * /api/exams/{id}/questions:
+//  *   get:
+//  *     summary: Lấy danh sách câu hỏi của bài thi với phần và câu hỏi
+//  *     tags: [Exams]
+//  *     parameters:
+//  *       - in: path
+//  *         name: id
+//  *         required: true
+//  *         schema:
+//  *           type: integer
+//  *         description: ID của bài thi cần lấy câu hỏi
+//  *     responses:
+//  *       200:
+//  *         description: Trả về danh sách câu hỏi của bài thi
+//  *       404:
+//  *         description: Không tìm thấy câu hỏi hoặc bài thi
+//  */
+// router.get("/:id/questions", ExamController.getExamQuestions);
 /**
  * @swagger
  * /api/exams/{id}/questions:
@@ -58,6 +78,13 @@ router.get("/:id", ExamController.getExamById);
  *         schema:
  *           type: integer
  *         description: ID của bài thi cần lấy câu hỏi
+ *       - in: query
+ *         name: expired
+ *         required: false
+ *         schema:
+ *           type: boolean
+ *           example: false
+ *         description: Chỉ định nếu bài thi đã hết thời gian. Nếu `true`, hệ thống sẽ random lại đề.
  *     responses:
  *       200:
  *         description: Trả về danh sách câu hỏi của bài thi
@@ -223,5 +250,11 @@ router.delete("/:id", verifyToken, ExamController.deleteExam);
  *         description: Chưa đăng nhập (Missing JWT Token)
  */
 router.post("/process", verifyToken, ExamController.processExamData);
+
+
+
+
+
+
 
 module.exports = router;

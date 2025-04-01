@@ -110,7 +110,33 @@ const ExamResultController = {
         } catch (error) {
             return serverErrorResponse(res, "Lỗi khi xóa kết quả bài thi");
         }
+    },
+    // 🟢 Thống kê số lần làm bài trong tháng
+    async getDailyExamAttempts(req, res) {
+        try {
+            const data = await ExamResultService.getDailyExamAttempts();
+            return successResponse(res, "Số lượt thi mỗi ngày trong tháng", data);
+        } catch (error) {
+            return serverErrorResponse(res, "Lỗi khi thống kê số lượt thi mỗi ngày");
+        }
+    },
+    // 🟢 Thống kê điểm trung bình trong tuần
+    async getAverageScoreLast7Days(req, res) {
+        try {
+            const avgScore = await ExamResultService.getAverageScoreLast7Days();
+            return successResponse(
+                res,
+                "Điểm trung bình trong 7 ngày gần đây",
+                avgScore
+            );
+        } catch (error) {
+            return serverErrorResponse(res, "Lỗi khi lấy điểm trung bình trong 7 ngày gần đây");
+        }
     }
+
+
+
+
 };
 
 module.exports = ExamResultController;

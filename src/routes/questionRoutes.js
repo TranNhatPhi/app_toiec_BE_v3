@@ -26,6 +26,20 @@ router.get("/", QuestionController.getAllQuestions);
 
 /**
  * @swagger
+ * /api/questions/countallquestion:
+ *   get:
+ *     summary: Lấy tổng số câu hỏi
+ *     tags: [Questions]
+ *     responses:
+ *       200:
+ *         description: Trả về tổng số câu hỏi
+ *         
+ */
+router.get("/countallquestion", QuestionController.getTotalQuestionCount);
+
+
+/**
+ * @swagger
  * /api/questions/{id}:
  *   get:
  *     summary: Lấy thông tin câu hỏi theo ID
@@ -245,5 +259,6 @@ router.post("/upload/:id", verifyToken, upload, optimizeImage, QuestionControlle
  *         description: Chưa đăng nhập
  */
 router.delete("/remove-image/:id", verifyToken, QuestionController.removeQuestionImage);
+
 
 module.exports = router;

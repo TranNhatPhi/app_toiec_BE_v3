@@ -28,7 +28,12 @@ const ExamResult = sequelize.define("ExamResult", {
         allowNull: false,
         defaultValue: "IN_PROGRESS"
     },
-    completed_at: { type: DataTypes.DATE, defaultValue: DataTypes.NOW }
+    completed_at: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
+    // 🆕 Trường chi tiết
+    detail: {
+        type: DataTypes.TEXT,
+        allowNull: true
+    }
 }, {
     tableName: "exam_results",
     timestamps: false

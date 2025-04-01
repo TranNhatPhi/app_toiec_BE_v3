@@ -14,9 +14,9 @@ app.use(express.static("uploads")); // 🆕 Cho phép truy cập ảnh đã uplo
 connectDB();
 
 // 🟢 Đồng bộ database
-sequelize.sync({ alter: true })
-    .then(() => console.log("✅ Database đã được đồng bộ!"))
-    .catch(err => console.error("❌ Lỗi đồng bộ database:", err));
+// sequelize.sync({ alter: false }) // alter: true để tự động cập nhật cấu trúc bảng nếu có thay đổi
+//     .then(() => console.log("✅ Database đã được đồng bộ!"))
+//     .catch(err => console.error("❌ Lỗi đồng bộ database:", err));
 
 // 🟢 Import routes
 const authRoutes = require("./routes/auth");
@@ -27,6 +27,7 @@ const examResultRoutes = require("./routes/examResultRoutes");  // 🆕 Thêm ro
 
 // 🟢 Kích hoạt Swagger Docs
 swaggerDocs(app);
+app.use("/api/users", require("./routes/userRoutes"));
 
 // 🟢 Sử dụng routes
 app.use("/api/auth", authRoutes);

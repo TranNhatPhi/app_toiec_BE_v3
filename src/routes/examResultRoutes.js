@@ -156,11 +156,11 @@ router.post("/", verifyToken, ExamResultController.createExamResult);
  *             properties:
  *               exam_id:
  *                 type: integer
- *                 example: 3
+ *                 example: 1  # Example exam_id
  *               completed_time:
  *                 type: integer
  *                 description: "Thời gian hoàn thành bài thi (tính bằng phút)"
- *                 example: 45
+ *                 example: 45  # Example completed_time
  *               answers:
  *                 type: array
  *                 description: "Danh sách câu trả lời của người dùng"
@@ -170,11 +170,39 @@ router.post("/", verifyToken, ExamResultController.createExamResult);
  *                     question_id:
  *                       type: integer
  *                       description: "ID của câu hỏi"
- *                       example: 101
+ *                       example: 1  # Example question_id
  *                     selected_answer:
  *                       type: string
  *                       description: "Đáp án do người dùng chọn (A, B, C, D hoặc null nếu không làm)"
- *                       example: "B"
+ *                       example: "A"  # Example selected_answer
+ *             example:
+ *               exam_id: 1
+ *               completed_time: 45
+ *               answers:
+ *                 - question_id: 1
+ *                   selected_answer: "A"
+ *                 - question_id: 2
+ *                   selected_answer: "B"
+ *                 - question_id: 3
+ *                   selected_answer: "C"
+ *                 - question_id: 4
+ *                   selected_answer: "A"
+ *                 - question_id: 5
+ *                   selected_answer: "D"
+ *                 - question_id: 6
+ *                   selected_answer: "A"
+ *                 - question_id: 7
+ *                   selected_answer: "B"
+ *                 - question_id: 8
+ *                   selected_answer: "C"
+ *                 - question_id: 9
+ *                   selected_answer: "A"
+ *                 - question_id: 10
+ *                   selected_answer: "D"
+ *                 - question_id: 11
+ *                   selected_answer: "A"
+ *                 - question_id: 12
+ *                   selected_answer: "B"
  *     responses:
  *       200:
  *         description: Bài thi đã được nộp thành công
@@ -202,14 +230,6 @@ router.post("/", verifyToken, ExamResultController.createExamResult);
  *                   type: integer
  *                   description: "Điểm tổng (TOEIC scale)"
  *                   example: 850
- *                 listening_score:
- *                   type: integer
- *                   description: "Điểm phần Listening"
- *                   example: 450
- *                 reading_score:
- *                   type: integer
- *                   description: "Điểm phần Reading"
- *                   example: 400
  *                 completed_time:
  *                   type: integer
  *                   description: "Thời gian hoàn thành bài thi"
@@ -223,6 +243,7 @@ router.post("/", verifyToken, ExamResultController.createExamResult);
  *       500:
  *         description: Lỗi hệ thống khi xử lý bài thi
  */
+
 router.post("/submit", verifyToken, ExamResultController.submitExamAnswers);
 
 
@@ -248,5 +269,53 @@ router.post("/submit", verifyToken, ExamResultController.submitExamAnswers);
  *         description: Không tìm thấy kết quả bài thi
  */
 router.delete("/:id", verifyToken, ExamResultController.deleteExamResult);
+
+
+/**
+ * @swagger
+ * /api/exam-results/stats/daily-attempts:
+ *   get:
+ *     summary: Thống kê số lượt thi mỗi ngày trong tháng
+ *     tags: [ExamResults]
+ *     responses:
+ *       200:
+ *         description: Trả về danh sách lượt thi theo từng ngày
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   date:
+ *                     type: string
+ *                     format: date
+ *                     example: 2025-03-01
+ *                   count:
+ *                     type: integer
+ *                     example: 5
+ */
+router.get("/stats/daily-attempts", ExamResultController.getDailyExamAttempts);
+
+/**
+ * @swagger
+ * /api/exam-results/stats/avg-score-last-7-days:   
+ *   get:
+ *     summary: Thống kê điểm trung bình trong 7 ngày gần đây
+ *     tags: [ExamResults]
+ *     responses:
+ *       200:
+ *         description: Trả về điểm trung bình trong 7 ngày gần đây
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                  avg_score:
+ *                    type: number
+ */
+router.get("/stats/avg-score-last-7-days", ExamResultController.getAverageScoreLast7Days);
 
 module.exports = router;
